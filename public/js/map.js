@@ -1,6 +1,6 @@
 var map = L.map('map');
 let coordinates = [parseFloat(lat),parseFloat(lon)];
-console.log(coordinates);
+// console.log(coordinates);
 map.setView(coordinates, 12);// default region and zoom 12
 
 

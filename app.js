@@ -2,6 +2,8 @@ if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
 
+// console.log(process.env);
+// console.log(process.env.secret);
 
 
 const express = require("express");
@@ -11,9 +13,6 @@ const port = 8080;
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-
-
-
 
 
 const ExpressError = require("./utils/ExpressError.js");
@@ -28,19 +27,13 @@ const localStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 
-
 // Router 
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //database -> wanderlust
 const dbURL = process.env.ATLASDB_USER;
-
-
-
-
-
 
 
 
@@ -61,7 +54,6 @@ app.set("views", path.join(__dirname, "views"));
 
 // to serve static files 
 app.use(express.static(path.join(__dirname, "public")));
-
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -106,11 +98,6 @@ const sessionOptions = {
 };
 
 
-app.get("/", (req, res) => {
-    res.redirect("/listings");
-});
-
-
 
 
 app.use(session(sessionOptions));
@@ -119,6 +106,8 @@ app.use(flash());
 
 // authentication ---------------------
 app.use(passport.initialize());
+
+
 app.use(passport.session());
 
 // User are now being authenticate be localStrategy by method authenticate
@@ -133,7 +122,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req, res, next) => {
-
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
@@ -142,13 +130,16 @@ app.use((req, res, next) => {
 });
 
 
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
+
 app.get("/demouser", async (req, res) => {
     let fakeUser = new User({
         email: "studen@gmail.com",
         username: "student",
     });
-
-
 
     const registerUser = await User.register(fakeUser, "helloworld");
     console.log(registerUser);
@@ -164,7 +155,6 @@ app.use("/", userRouter);
 
 
 
-
 // if no one route matched  then it will match
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page not found"));
@@ -173,12 +163,13 @@ app.use((req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-  
-
+   
     let { statusCode = 500, message = "something went wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { err });
-   
+  
 });
+
+
 
 
 app.listen(port, () => {

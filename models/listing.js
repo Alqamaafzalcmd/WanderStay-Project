@@ -64,7 +64,7 @@ const listingSchema = new Schema({
 
 
 listingSchema.post("findOneAndDelete", async (listing) => {// listing is data which is deleted 
-    console.log(listing);
+    // console.log(listing);
     if (listing) {
         await Review.deleteMany({ _id: { $in: listing.reviews } });
     }

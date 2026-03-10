@@ -15,7 +15,7 @@ async function geocodeLocation(place) {
         throw new Error("Location not found. Try a more specific place.");
     }
 
-     console.log(data);
+    //  console.log(data);
 }
 
 module.exports = geocodeLocation;
