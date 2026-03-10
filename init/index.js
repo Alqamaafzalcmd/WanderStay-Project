@@ -24,7 +24,7 @@ async function geocodeLocation(place) {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}&limit=1`;
     const response = await fetch(url, {
         headers: {
-            "User-Agent": "wanderlust-project"
+            "User-Agent": "WanderStay-Project"
         }
     });
     const data = await response.json();
