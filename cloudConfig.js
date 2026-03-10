@@ -11,15 +11,6 @@ cloudinary.v2.config({
 
 
 
-/*
- * Cloudinary storage configuration for multer
- * @type {CloudinaryStorage}
- * @property {object} cloudinary - Cloudinary instance for authentication and API calls
- * @property {object} params - Storage parameters for Cloudinary uploads
- * @property {string} params.folder - Destination folder in Cloudinary ('wanderlust_dev')
- * @property {string[]} params.allowedFormats - Allowed file formats for upload (png, jpg, jpeg)
- */
-
 // defining storage CloudinaryStorage --------
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,

@@ -1,7 +1,7 @@
 var map = L.map('map');
 let coordinates = [parseFloat(lat),parseFloat(lon)];
 console.log(coordinates);
-map.setView(coordinates, 12);// default region and zoom 5
+map.setView(coordinates, 12);// default region and zoom 12
 
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

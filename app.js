@@ -2,8 +2,6 @@ if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
 
-// console.log(process.env);
-// console.log(process.env.secret);
 
 
 const express = require("express");
@@ -17,7 +15,7 @@ const ejsMate = require("ejs-mate");
 
 
 
-// const wrapAsync = require("./utils/wrapAsync.js");
+
 const ExpressError = require("./utils/ExpressError.js");
 
 const session = require("express-session");
@@ -29,8 +27,6 @@ const passport = require("passport");
 const localStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-// const joi = require("joi");
-// const {listingSchema, reviewSchema} = require("./JoiSchema.js");// joi schema for validation of listing / reviews
 
 
 // Router 
@@ -38,14 +34,12 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //database -> wanderlust
+
 const dbURL = process.env.ATLASDB_USER;
 
 
 
 
-// const Listing = require("./models/listing.js"); // listing model(collection)
-// const Review = require("./models/review.js");// review model (collection)
 
 
 
@@ -67,7 +61,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // to serve static files 
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, "public/js")))
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -125,17 +119,13 @@ app.use(flash());
 
 // authentication ---------------------
 app.use(passport.initialize());
-
-/* A web application needs the ability to identify 
-users  as they browse from page to page . This series of requests
-and responses, each associated with the same user, is known as a session */
 app.use(passport.session());
 
 // User are now being authenticate be localStrategy by method authenticate
 passport.use(new localStrategy(User.authenticate()));
 
 
-// use static serialize and deserialize of model for passport session support ----
+// using static serialize and deserialize of model for passport session support ----
 // serializeUser — “What do I store in the session?”
 passport.serializeUser(User.serializeUser());
 // deserializeUser — “How do I get the user back?”
@@ -147,7 +137,6 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
-    // console.log(res.locals.success);
     next();
 
 });
@@ -160,9 +149,7 @@ app.get("/demouser", async (req, res) => {
     });
 
 
-    /* register(user, password, cb) Convenience method to
-     register a new user instance with a given password.
-      Checks if username is unique. */
+
     const registerUser = await User.register(fakeUser, "helloworld");
     console.log(registerUser);
     res.send(registerUser);
@@ -178,34 +165,6 @@ app.use("/", userRouter);
 
 
 
-
-
-//  ---------------------------------------------------------------------------------------------------
-// app.get("/testListing", (req, res) => {
-//     let sampleListing = new Listing({
-//         title: "My new Villa",
-//         description: "By the beach",
-//         price: 1200,
-//         location: "New Delhi, India",
-//         country:"India",
-//     });
-
-//     sampleListing.save()
-//        .then((res) => {
-//         console.log(res);
-//        })
-//        .catch((err) => {
-//         console.log(err);
-//        });
-
-//      res.send("successful test");
-
-// });
-//----------------------------------------------------------------------------------------------------
-
-
-
-
 // if no one route matched  then it will match
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page not found"));
@@ -214,17 +173,12 @@ app.use((req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-    // res.send("something went wrong");
+  
 
     let { statusCode = 500, message = "something went wrong" } = err;
-    // res.status(statusCode).send(message);
-    // res.send(err);
-
     res.status(statusCode).render("listings/error.ejs", { err });
-    // res.send(err);
+   
 });
-
-
 
 
 app.listen(port, () => {

@@ -24,7 +24,7 @@ module.exports.showAllListing = async (req, res) => {
             }
         })
         .populate('owner');
-    // console.log(listing);
+   
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist!");
         res.redirect("/listings");
@@ -67,9 +67,6 @@ module.exports.createListing = async (req, res, next) => {
     const url = req.file.secure_url;
     const filename = req.file.public_id;
 
-    // console.log(url);
-    // console.log(filename);
-
 
     const newListing = new Listing(req.body.listing);// creating document
     newListing.owner = req.user._id;
@@ -105,10 +102,7 @@ module.exports.renderEditForm = async (req, res) => {
 
 
 module.exports.updateListing = async (req, res) => {
-    // if(!req.body.listing){
-    //   throw new ExpressError(402, "no matched data to update");
-    // }
-
+   
     let { id } = req.params;
     let listing = await Listing.findById(id);
 
@@ -135,7 +129,6 @@ module.exports.updateListing = async (req, res) => {
 module.exports.destroyListing = async (req, res) => {
     let { id } = req.params;
     let deleteData = await Listing.findByIdAndDelete(id);
-    // console.log(deleteData);
     req.flash("success", "Listing deleted");
     res.redirect("/listings");
 }

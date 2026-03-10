@@ -7,14 +7,9 @@ const Review = require("../models/review.js");// review model (collection)
 const {listingSchema, reviewSchema} = require("../JoiSchema.js");// joi schema for validation of listing / reviews
 const {validateReview, isLoggedIn, isReviewAuthor} = require("../middleware.js")
 
-// #######################################
-// common part is /listings/:id/reviews
-// #######################################
-
 
 const reviewController = require("../controllers/reviews.js");
 
-// ------------------------------------------ REVIEWS SECTION -----------------------------------------------
 
 // Post review route  -----  adding a review
 router.post("/", 

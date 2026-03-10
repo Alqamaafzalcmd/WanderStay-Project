@@ -11,8 +11,7 @@ module.exports.signupForm = async (req, res) => {
         const newUser = new User({ email, username });
 
         const registeredUser = await User.register(newUser, password);
-        // console.log(registeredUser);
-
+       
         //login after signup automatically --------
         req.login(registeredUser, (err) => {
             if (err) {
@@ -32,8 +31,6 @@ module.exports.signupForm = async (req, res) => {
 
 module.exports.login = async (req, res) => {
     req.flash("success", "welcome to wanderlust");
-    // res.redirect("/listings");
-    // to redirect user after login where user wants to after login
     let redirectUrl = res.locals.redirectUrl || "/listings";
     res.redirect(redirectUrl);
 };

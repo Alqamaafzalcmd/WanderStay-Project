@@ -1,10 +1,10 @@
 const Listing = require("./models/listing.js");
 const ExpressError = require("./utils/ExpressError.js");
-const Review = require("./models/review.js");// review model (collection)
-const { listingSchema, reviewSchema } = require("./JoiSchema.js");// joi schema for validation of listing / reviews
+const Review = require("./models/review.js");
+const { listingSchema, reviewSchema } = require("./JoiSchema.js");
 
 
-// validation for schema of listings ----------- (parsing this as validator middleware for schema validation)
+// validation for schema of listings 
 module.exports.validateListing = (req, res, next) => {
     const { error } = listingSchema.validate(req.body);
     if (error) {
@@ -22,8 +22,6 @@ module.exports.validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);
     if (error) {
         let errMsg = error.details.map((ele) => ele.message).join(",");
-        // console.log(error);
-        // res.send(error);
         throw new ExpressError(400, errMsg);
     }
     else {
@@ -33,10 +31,7 @@ module.exports.validateReview = (req, res, next) => {
 
 
 module.exports.isLoggedIn = (req, res, next) => {
-    // console.log(req.user);
-    // console.log("-------------------------");
-    // console.log(req);
-    // console.log(req.path, "...", req.originalUrl);
+
     if (!req.isAuthenticated()) {
         // storing redirecturl into session -------------
         req.session.redirectUrl = req.originalUrl;

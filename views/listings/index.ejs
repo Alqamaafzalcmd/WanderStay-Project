@@ -43,8 +43,7 @@
     </style>
 
     <body>
-        <!-- <h3>All Listings</h3> -->
-        <!-- <form action="/listings/new" method="GET"><button> + Add new</button></form> -->
+     
 
         <div id="filters">
             <div class="filter">
@@ -138,22 +137,13 @@
         </div>
 
 
-
-        <!-- <ul>
-                    <%for(let listing of allListings){%>
-                        <li><a href="/listings/<%= listing._id %>">
-                                <%= listing.title %>
-                            </a></li>
-                        <%}%>
-                </ul> -->
-
     </body>
 
 
     <script>
         let taxSwitch = document.getElementById('switchCheckDefault');
         taxSwitch.addEventListener("click", () => {
-            // console.log("Clicked");
+            
             let taxInfo = document.querySelectorAll(".tax-info");
             for (info of taxInfo) {
                 if (info.style.display !== "inline") {

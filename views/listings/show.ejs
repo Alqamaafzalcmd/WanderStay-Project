@@ -3,7 +3,6 @@
         const lon = `<%= JSON.stringify(listing.geometry.coordinates[0]) %>`;
         const lat = `<%= JSON.stringify(listing.geometry.coordinates[1]) %>`;
         const lct = `<%= listing.location %>`;
-        // console.log("<%= listing.location %>");
     </script>
 
 
@@ -59,11 +58,7 @@
                             <h5>Leave a Review</h5>
                             <form action="/listings/<%= listing._id %>/reviews" method="Post" novalidate
                                 class="mb-3 needs-validation">
-                                <!-- <div class="mb-3 mt-3">
-                                    <label for="rating" class="form-label ">Rating</label>
-                                    <input type="range" class="form-range" max="5" min="1" name="review[rating]"
-                                        id="rating">
-                                </div> -->
+
 
                                 <div class="mb-3 mt-3">
                                     <label for="rating" class="form-label ">Rating</label>
@@ -114,9 +109,7 @@
                                                     <p class="card-text">
                                                         <%= review.comment %>
                                                     </p>
-                                                    <!-- <p class="card-text">
-                                                    <%= review.rating %>
-                                                </p> -->
+                                    
 
 
                                                     <form

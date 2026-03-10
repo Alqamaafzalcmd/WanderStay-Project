@@ -15,14 +15,10 @@ const multer = require('multer');
 
 const { storage } = require("../cloudConfig.js");
 
-// const upload = multer({ dest: 'uploads/' })
+
 const upload = multer({ storage });// multer will save our file to cloudinary storage
 
 
-
-// #######################################
-// common part is   /listings
-// #######################################
 
 router.route("/")
     // index route 
@@ -30,18 +26,6 @@ router.route("/")
 
     // adding new list recieved from form --------- 
     .post(isLoggedIn, validateListing, upload.single('listing[image]'), wrapAsync(listingController.createListing));
-
-//    .post(upload.single('listing[image]'),  (req, res) => {
-//          res.send(req.file);
-//     })
-
-
-
-// router.route("/")
-//     // index route 
-//     .get(wrapAsync(listingController.index))
-//     // adding new list recieved from form --------- 
-//     .post(isLoggedIn, validateListing, wrapAsync(listingController.createListing));
 
 
 
