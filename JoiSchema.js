@@ -10,6 +10,7 @@ const listingSchema = Joi.object({
         description: Joi.string().required(),
 
         image: Joi.string().allow("", null),
+        category: Joi.array().items(Joi.string()),
     }).required(),
 });
 

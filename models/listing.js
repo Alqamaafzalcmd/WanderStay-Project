@@ -2,6 +2,47 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
 
+let category_options = [
+  "rooms",
+  "villa",
+  "apartment",
+  "hostel",
+  "hotel",
+  "resort",
+  "cabin",
+  "treehouse",
+  "beach",
+  "mountains",
+  "cities",
+  "city",
+  "countryside",
+  "forest",
+  "island",
+  "desert",
+  "lake",
+  "budget",
+  "mid-range",
+  "luxury",
+  "adventure",
+  "romantic",
+  "family",
+  "nature",
+  "eco",
+  "wildlife",
+  "camping",
+  "historic",
+  "trending",
+  "unique",
+  "offbeat",
+  "farmstay",
+  "domes",
+  "castles",
+  "arctic",
+  "pools",
+  "farms"
+];
+
+
 const listingSchema = new Schema({
 
     title: {
@@ -41,7 +82,7 @@ const listingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    
+
     geometry: {
         type: {
             type: String, // Don't do `{ location: { type: String } }`
@@ -55,10 +96,11 @@ const listingSchema = new Schema({
     },
 
     // build this own for filter options --------------------
-    // category:{
-    //     type:String,
-    //     enum:["rooms", "farms", "mountains"];
-    // }
+    category: {
+        type: [String],
+        enum: category_options,
+        default: ["rooms","hotel"]
+    }
 
 });
 
@@ -72,6 +114,6 @@ listingSchema.post("findOneAndDelete", async (listing) => {// listing is data wh
 
 // creating model Listing (Collections)
 const Listing = mongoose.model("Listing", listingSchema);
-module.exports = Listing;
+module.exports = {Listing,category_options};
 
 

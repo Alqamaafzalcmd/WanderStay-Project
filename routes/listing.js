@@ -20,7 +20,14 @@ const upload = multer({ storage });// multer will save our file to cloudinary st
 
 
 
+router.route("/search")
+    // implementing search feature
+    .post(wrapAsync(listingController.listingSearch))
+    .get(wrapAsync(listingController.filterCategory));
+
+
 router.route("/")
+    
     // index route 
     .get(wrapAsync(listingController.index))
 

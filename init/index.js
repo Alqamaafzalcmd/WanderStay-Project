@@ -1,6 +1,6 @@
 const  mongoose = require("mongoose");
 const initData = require("./data.js");
-const Listing = require("../models/listing.js");
+const {Listing} = require("../models/listing.js");
 const fetch = require("node-fetch");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -21,7 +21,7 @@ main()
 
 
 async function geocodeLocation(place) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(place)}&limit=1`;
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${(place)}&limit=1`;
     const response = await fetch(url, {
         headers: {
             "User-Agent": "WanderStay-Project"
@@ -43,6 +43,7 @@ async function geocodeLocation(place) {
     for (let obj of initData.data) {
         try {
             const geoData = await geocodeLocation(obj.location);
+            // console.log(geoData);
             const geometry = {
                 type: "Point",
                 coordinates: [parseFloat(geoData.lon), parseFloat(geoData.lat)]
@@ -53,11 +54,16 @@ async function geocodeLocation(place) {
             // Skip or use default
             listingsWithGeo.push({ ...obj, owner: "698ad61a13f0baaaf1459a9c", geometry: { type: "Point", coordinates: [0, 0] } });
         }
+        // break;
     }
       
     await Listing.insertMany(listingsWithGeo);
-    // console.log("data was initialized");
+    console.log("data is initialized now!!");
+    
  }
-
+ 
  initDB();
 
+
+
+ 

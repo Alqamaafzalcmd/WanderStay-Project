@@ -31,78 +31,96 @@
         .tax_toggle {
             padding: 15px;
             border-radius: 12px;
-            /* border: 1.5px solid black; */
-            height: 3.5rem;
-            padding: 1rem;
-             margin-top: 1rem;
-             margin-left:1rem;
-             background-color: rgb(255, 236, 218);
+            border: 1px solid rgb(210, 209, 209);
+            height: 2rem !important;
+            padding: 1rem 2rem 1rem 2rem;
+            margin-top: 1rem;
+            margin-left: 1rem;
+            background-color: rgba(227, 224, 224, 0.3);
+            font-size: 0.9rem !important;
+            width: 210px !important;
         }
+
+        .filter div a {
+            color: black !important;
+            opacity: 0.8;
+        }
+
+        .tax-main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
 
      
     </style>
 
     <body>
-     
+
 
         <div id="filters">
             <div class="filter">
-                <div><i class="fa-solid fa-fire"></i></div>
+                <div><a href="/listings/search?category=Trending"><i class="fa-solid fa-fire"></i></a></div>
                 <p>Trending</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-solid fa-bed"></i></div>
+                <div><a href="/listings/search?category=rooms"><i class="fa-solid fa-bed"></i></a></div>
                 <p>Rooms</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <div><a href="/listings/search?category=cities"><i class="fa-solid fa-mountain-city"></i></a></div>
                 <p>Iconic Cites</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-solid fa-mountain"></i></div>
+                <div><a href="/listings/search?category=mountains"><i class="fa-solid fa-mountain"></i></a></div>
                 <p>Mountains</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-brands fa-fort-awesome"></i></div>
+                <div><a href="/listings/search?category=castles"><i class="fa-brands fa-fort-awesome"></i></a></div>
                 <p>Castles</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-solid fa-snowflake"></i></div>
+                <div><a href="/listings/search?category=arctic"><i class="fa-solid fa-snowflake"></i></a></div>
                 <p>Arctic</p>
             </div>
 
 
             <div class="filter">
-                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <div><a href="/listings/search?category=pools"><i class="fa-solid fa-person-swimming"></i></a></div>
                 <p>Amazing Pools</p>
             </div>
 
 
             <div class="filter">
-                <div><i class="fa-solid fa-building-wheat"></i></div>
+                <div><a href="/listings/search?category=farms"><i class="fa-solid fa-building-wheat"></i></a></div>
                 <p>Farms</p>
             </div>
 
-             <div class="filter">
-                <div><i class="fa-solid fa-igloo"></i></div>
+            <div class="filter">
+                <div><a href="/listings/search?category=domes"><i class="fa-solid fa-igloo"></i></a></div>
                 <p>Domes</p>
             </div>
 
             <div class="filter">
-                <div><i class="fa-solid fa-earth-oceania"></i></div>
+                <div><a href="/listings/search?category=island"><i class="fa-solid fa-earth-oceania"></i></a></div>
                 <p>Island</p>
             </div>
 
 
-            <div class="form-check-reverse form-switch tax_toggle">
-                <input class="form-check-input " type="checkbox" role="switch" id="switchCheckDefault">
-                <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
-            </div>
+            <% if(allListings.length !==0){%>
+                <div class="form-check-reverse form-switch tax_toggle tax-main">
+                    <div>
+                        <input class="form-check-input " type="checkbox" role="switch" id="switchCheckDefault">
+                        <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+                    </div>
+                </div>
+            <% } %>
 
 
         </div>
@@ -126,7 +144,7 @@
                                 &#8377;
                                 <%= listing.price !=null ? listing.price.toLocaleString("en-IN") : "N/A" %>
                                     /night
-                                    <i class="tax-info">&nbsp; &nbsp;+18% GST</i>
+                                    <i class="tax-info">+ <%= Math.floor(( Math.random() + 1) * 10)%>% GST</i>
                             </p>
 
                         </div>
@@ -143,7 +161,7 @@
     <script>
         let taxSwitch = document.getElementById('switchCheckDefault');
         taxSwitch.addEventListener("click", () => {
-            
+
             let taxInfo = document.querySelectorAll(".tax-info");
             for (info of taxInfo) {
                 if (info.style.display !== "inline") {

@@ -1,5 +1,6 @@
-const Listing = require("../models/listing");
+const {Listing, category_options} = require("../models/listing");
 const fetch = require("node-fetch");
+const ExpressError = require("../utils/ExpressError");
 
 
 module.exports.index = async (req, res) => {
@@ -8,9 +9,61 @@ module.exports.index = async (req, res) => {
 
 };
 
+module.exports.listingSearch = async (req, res) => {
+    let { category } = req.body;
+    category = category.toLowerCase();
+
+    // for cateogory
+    let allListings = await Listing.find({
+        category: { $in: [`${category}`] }
+    });
+
+    // for destination (location)
+    if (allListings.length == 0) {
+        let{ category : dest} = req.body;
+        allListings = await Listing.find({ location: {$regex : `${dest}`,$options:"i"} });
+    }
+
+      // for destination (country)
+     if (allListings.length == 0) {    
+        let {category : cntry } = req.body;
+        allListings = await Listing.find({ country: {$regex : `${cntry}`,$options:"i"} });
+    }
+
+
+    // console.log(allListings);
+
+    if (allListings.length === 0) {
+        req.flash("error", ` '${category}' not found please search another category`);
+    }
+    // res.send(targetListings);
+    res.render("listings/index.ejs", { allListings });
+}
+
+
+module.exports.filterCategory = async (req, res) => {
+
+    let { category } = req.query;
+    category = category.toLowerCase();
+    const allListings = await Listing.find({
+        category: { $in: [`${category}`] }
+    });
+
+    // console.log(allListings);
+
+    if (allListings.length === 0) {
+        req.flash("error", ` '${category}' not found please search another category`);
+    }
+    // res.send(targetListings);
+    res.render("listings/index.ejs", { allListings });
+
+}
+
+
+
 
 module.exports.renderNewForm = (req, res) => {
-    res.render("listings/new.ejs");
+    res.render("listings/new.ejs",{category_options});
 };
 
 
@@ -24,7 +77,7 @@ module.exports.showAllListing = async (req, res) => {
             }
         })
         .populate('owner');
-   
+
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist!");
         res.redirect("/listings");
@@ -45,7 +98,7 @@ module.exports.createListing = async (req, res, next) => {
         });
         const data = await response.json();
         if (!data || data.length === 0) {
-            throw new Error("Location not found. Try a more specific place.");
+            throw new ExpressError("Location not found. Try a more specific place.");
         }
 
         else return data;
@@ -69,14 +122,16 @@ module.exports.createListing = async (req, res, next) => {
 
 
     const newListing = new Listing(req.body.listing);// creating document
+    // console.log(newListing.category);
+
     newListing.owner = req.user._id;
 
     newListing.image = { url, filename };
 
     newListing.geometry = geo;
 
-   let saveListing =  await newListing.save();
-   // console.log(saveListing);
+    let saveListing = await newListing.save();
+    // console.log(saveListing);
 
     req.flash("success", "New listing Created");
     res.redirect("/listings");
@@ -95,14 +150,14 @@ module.exports.renderEditForm = async (req, res) => {
     }
 
     let originaImageUrl = listing.image.url;
-    originaImageUrl = originaImageUrl.replace("/upload", "/upload/h_300,w_300,r_max,f_auto"); // using cloudinary api to show image in listing
-    return res.render("listings/edit.ejs", { listing, originaImageUrl });
+    originaImageUrl = originaImageUrl.replace("/upload", "/upload/h_300,w_300,r_20,f_auto"); // using cloudinary api to show image in listing
+    return res.render("listings/edit.ejs", { listing, originaImageUrl, category_options });
 
 }
 
 
 module.exports.updateListing = async (req, res) => {
-   
+
     let { id } = req.params;
     let listing = await Listing.findById(id);
 

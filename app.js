@@ -30,14 +30,14 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //database -> wanderlust
-const dbURL = process.env.ATLASDB_USER;
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //database -> wanderlust
+// const dbURL = process.env.ATLASDB_USER;
 
 
 
 async function main() {
-    // await mongoose.connect(MONGO_URL);
-    await mongoose.connect(dbURL);
+    await mongoose.connect(MONGO_URL);
+    // await mongoose.connect(dbURL);
 }
 
 
@@ -68,23 +68,23 @@ main()
 
 
 
-const store = MongoStore.create({
-    mongoUrl: dbURL,
-    crypto : {
-        secret: process.env.SECRET,
-    },
-    touchAfter: 24 * 3600 ,// time period in seconds
-    ttl: 60 * 60 * 24 * 7,
-});
+// const store = MongoStore.create({
+//     mongoUrl: dbURL,
+//     crypto : {
+//         secret: process.env.SECRET,
+//     },
+//     touchAfter: 24 * 3600 ,// time period in seconds
+//     ttl: 60 * 60 * 24 * 7,
+// });
 
 
-store.on("error", () => {
-    console.log("ERROR IN MONGO SESSION STORE", err);
-});
+// store.on("error", () => {
+//     console.log("ERROR IN MONGO SESSION STORE", err);
+// });
 
 
 const sessionOptions = {
-    store,// session storage
+    // store,// session storage
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
@@ -129,6 +129,8 @@ app.use((req, res, next) => {
 
 
 app.get("/", (req, res) => {
+    // console.log("in root path");
+    // res.send("in root path")
     res.redirect("/listings");
 });
 
@@ -161,7 +163,7 @@ app.use((req, res, next) => {
 
 
 app.use((err, req, res, next) => {
-   
+    // console.log(err);
     let { statusCode = 500, message = "something went wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { err });
   

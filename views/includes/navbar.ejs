@@ -32,6 +32,14 @@
     }
 
   }
+
+  .search-main {
+    box-shadow: 0.5px 1px 0.5px rgb(180, 179, 179);
+  }
+
+  .btn-main {
+    box-shadow: 1px 1.5px 1px rgba(255, 157, 157, 0.8);
+  }
 </style>
 <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
 
@@ -45,8 +53,6 @@
 
 
 
-
-
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
 
@@ -56,11 +62,12 @@
 
 
 
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations"
-            aria-label="Search" />
-          <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+      <div class="navbar-nav ms-auto ">
+        <form action="/listings/search" method="POST" class="d-flex" role="search">
+          <input class="form-control me-2 search-inp search-main" type="search" placeholder="Search destination"
+            aria-label="Search" name="category" />
+          <button class="btn btn-search btn-main" type="submit"><i
+              class="fa-solid fa-magnifying-glass"></i>Search</button>
         </form>
       </div>
 
