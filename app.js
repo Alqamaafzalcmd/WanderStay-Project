@@ -31,13 +31,13 @@ const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //database -> wanderlust
-// const dbURL = process.env.ATLASDB_USER;
+const dbURL = process.env.ATLASDB_USER;
 
 
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
-    // await mongoose.connect(dbURL);
+    // await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbURL);
 }
 
 
@@ -84,7 +84,7 @@ main()
 
 
 const sessionOptions = {
-    // store,// session storage
+    store,// session storage
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
