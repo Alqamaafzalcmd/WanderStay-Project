@@ -1,4 +1,4 @@
-const {Listing, category_options} = require("../models/listing");
+const { Listing, category_options } = require("../models/listing");
 const fetch = require("node-fetch");
 const ExpressError = require("../utils/ExpressError");
 
@@ -20,24 +20,26 @@ module.exports.listingSearch = async (req, res) => {
 
     // for destination (location)
     if (allListings.length == 0) {
-        let{ category : dest} = req.body;
-        allListings = await Listing.find({ location: {$regex : `${dest}`,$options:"i"} });
+        let { category: dest } = req.body;
+        allListings = await Listing.find({ location: { $regex: `${dest}`, $options: "i" } });
     }
 
-      // for destination (country)
-     if (allListings.length == 0) {    
-        let {category : cntry } = req.body;
-        allListings = await Listing.find({ country: {$regex : `${cntry}`,$options:"i"} });
+    // for destination (country)
+    if (allListings.length == 0) {
+        let { category: cntry } = req.body;
+        allListings = await Listing.find({ country: { $regex: `${cntry}`, $options: "i" } });
     }
 
 
     // console.log(allListings);
 
-    if (allListings.length === 0) {
+    if (allListings.length == 0) {
         req.flash("error", ` '${category}' not found please search another category`);
+        allListings = await Listing.find({});
+        res.redirect("/listings");
     }
     // res.send(targetListings);
-    res.render("listings/index.ejs", { allListings });
+    else res.render("listings/index.ejs", { allListings });
 }
 
 
@@ -51,11 +53,13 @@ module.exports.filterCategory = async (req, res) => {
 
     // console.log(allListings);
 
-    if (allListings.length === 0) {
+    if (allListings.length == 0) {
         req.flash("error", ` '${category}' not found please search another category`);
+        let allListings = await Listing.find({});
+        res.redirect("/listings");
     }
     // res.send(targetListings);
-    res.render("listings/index.ejs", { allListings });
+    else res.render("listings/index.ejs", { allListings });
 
 }
 
@@ -63,7 +67,7 @@ module.exports.filterCategory = async (req, res) => {
 
 
 module.exports.renderNewForm = (req, res) => {
-    res.render("listings/new.ejs",{category_options});
+    res.render("listings/new.ejs", { category_options });
 };
 
 
