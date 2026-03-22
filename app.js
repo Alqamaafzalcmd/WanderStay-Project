@@ -36,8 +36,8 @@ const dbURL = process.env.ATLASDB_USER;
 
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
-    // await mongoose.connect(dbURL);
+    // await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbURL);
 }
 
 
@@ -68,23 +68,23 @@ main()
 
 
 
-// const store = MongoStore.create({
-//     mongoUrl: dbURL,
-//     crypto : {
-//         secret: process.env.SECRET,
-//     },
-//     touchAfter: 24 * 3600 ,// time period in seconds
-//     ttl: 60 * 60 * 24 * 7,
-// });
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    crypto : {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600 ,// time period in seconds
+    ttl: 60 * 60 * 24 * 7,
+});
 
 
-// store.on("error", () => {
-//     console.log("ERROR IN MONGO SESSION STORE", err);
-// });
+store.on("error", () => {
+    console.log("ERROR IN MONGO SESSION STORE", err);
+});
 
 
 const sessionOptions = {
-    // store,// session storage
+    store,// session storage
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
