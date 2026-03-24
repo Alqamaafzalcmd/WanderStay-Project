@@ -109,6 +109,7 @@ module.exports.createListing = async (req, res, next) => {
     };
 
     let data = await geocodeLocation(req.body.listing.location);
+    console.log(data);
     // console.log(data[0]);
     // console.log(data[0].lon, data[0].lat);
 
