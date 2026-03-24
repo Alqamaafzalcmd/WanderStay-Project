@@ -102,7 +102,7 @@ module.exports.createListing = async (req, res, next) => {
         });
         const data = await response.json();
         if (!data || data.length === 0) {
-            throw new ExpressError("Location not found. Try a more specific place.");
+            throw new ExpressError(400,"Location not found. Try a more specific place.");
         }
 
         else return data;
