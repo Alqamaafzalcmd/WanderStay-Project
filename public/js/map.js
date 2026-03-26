@@ -6,7 +6,7 @@ map.setView(coordinates, 12);// default region and zoom 12
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 20,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Wanderlust</a>'
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">WanderStay</a>'
 }).addTo(map);
 
 

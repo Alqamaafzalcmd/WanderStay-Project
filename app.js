@@ -36,8 +36,8 @@ const dbURL = process.env.ATLASDB_USER;
 
 
 async function main() {
-    // await mongoose.connect(MONGO_URL);
-    await mongoose.connect(dbURL);
+    await mongoose.connect(MONGO_URL);
+    // await mongoose.connect(dbURL);
 }
 
 
@@ -84,7 +84,7 @@ store.on("error", () => {
 
 
 const sessionOptions = {
-    store,// session storage
+    // store,// session storage
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,

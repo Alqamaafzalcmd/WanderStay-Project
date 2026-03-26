@@ -14,7 +14,6 @@ let category_options = [
   "beach",
   "mountains",
   "cities",
-  "city",
   "countryside",
   "forest",
   "island",

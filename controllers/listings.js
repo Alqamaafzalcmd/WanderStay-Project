@@ -67,6 +67,7 @@ module.exports.filterCategory = async (req, res) => {
 
 
 module.exports.renderNewForm = (req, res) => {
+    category_options.sort();
     res.render("listings/new.ejs", { category_options });
 };
 
@@ -102,7 +103,7 @@ module.exports.createListing = async (req, res, next) => {
         });
         const data = await response.json();
         if (!data || data.length === 0) {
-            throw new ExpressError(400,"Location not found. Try a more specific place.");
+            throw new ExpressError(404,"Location not found. Try a more specific place.");
         }
 
         else return data;
@@ -156,6 +157,8 @@ module.exports.renderEditForm = async (req, res) => {
 
     let originaImageUrl = listing.image.url;
     originaImageUrl = originaImageUrl.replace("/upload", "/upload/h_300,w_300,r_20,f_auto"); // using cloudinary api to show image in listing
+
+    category_options.sort();
     return res.render("listings/edit.ejs", { listing, originaImageUrl, category_options });
 
 }
