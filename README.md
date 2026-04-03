@@ -87,39 +87,12 @@ wanderstay/
 
 ---
 
-## 🚀 Getting Started  
-
-### Prerequisites  
-- Node.js installed  
-- MongoDB installed and running  
-
-### Installation  
-
-```bash
-git clone https://github.com/your-username/wanderstay.git
-cd wanderstay
-npm install
-npm start
-```
-
----
-
 ## 🌱 Future Enhancements  
 
 - 💳 Payment gateway integration (Stripe / Razorpay)  
 - 🤖 AI-based property recommendations  
 - 📊 Host analytics dashboard  
 - ❤️ Wishlist / favorites system  
-
----
-
-## 🤝 Contributing  
-
-1. Fork the repository  
-2. Create a new branch (`feature/your-feature`)  
-3. Commit your changes  
-4. Push to your branch  
-5. Open a Pull Request  
 
 ---
 
@@ -131,8 +104,8 @@ If you found this project useful, consider giving it a ⭐ on GitHub!
 
 ## 📬 Contact  
 
-- Email: your-email@example.com  
-- GitHub: your-profile  
+- Email: alquamaafzal7462@gmail.com  
+- GitHub: Alqamaafzalcmd
 
 ---
 
